@@ -46,6 +46,26 @@ editor.addControls([draw, cad]);
 
 ```
 
+## Angular Component
+
+```
+npm install jsts --save
+npm install ol --save
+```
+
+index.html
+``` html
+<link rel="stylesheet" href="https://openlayers.org/en/v5.3.0/css/ol.css" type="text/css">
+<script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js"></script>
+```
+
+app-component.ts
+
+``` javascript
+declare var ol: any;
+```
+
+
 ## Development
 - Build: `npm run build`
 - Create doc: `npm run-script doc`
