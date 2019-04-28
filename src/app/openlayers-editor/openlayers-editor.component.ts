@@ -1,4 +1,5 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import WMTSTileGrid from 'ol/tilegrid/WMTS.js';
 import * as ole from '../ole/index.js';
 
 declare var ol: any;
@@ -18,6 +19,7 @@ export class OpenlayersEditorComponent implements OnInit {
     }
 
     ngOnInit() {
+        //http://www.gisandbeers.com/servidores-wms-libres-datos-e-imagenes-satelite/
 
         const editLayer = new ol.layer.Vector({
             source: new ol.source.Vector(),
@@ -26,8 +28,34 @@ export class OpenlayersEditorComponent implements OnInit {
         const map = new ol.Map({
             layers: [
                 new ol.layer.Tile({
-                    source: new ol.source.OSM()
+                    title: 'OpenStreetMap',
+                    type: 'base',
+                    source: new ol.source.TileImage({
+                        url: 'http://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    })
                 }),
+                new ol.layer.Tile({
+                    title: 'Google Satellite',
+                    visible: false,
+                    source: new ol.source.TileImage({
+                        url: 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
+                    })
+                }),
+                new ol.layer.Tile({
+                    title: 'Google Hybrid',
+                    visible: false,
+                    source: new ol.source.TileImage({
+                        url: 'https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}',
+                    })
+                }),
+                // new ol.layer.Tile({
+                //     title: 'Global Imagery',
+                //     source: new ol.source.TileWMS({
+                //         url: 'https://ahocevar.com/geoserver/wms',
+                //         params: {LAYERS: 'nasa:bluemarble', TILED: true}
+                //     })
+                // }),
+
                 editLayer
             ],
             target: 'map',
@@ -36,6 +64,11 @@ export class OpenlayersEditorComponent implements OnInit {
                 zoom: 15
             })
         });
+
+        // Create a LayerSwitcher instance and add it to the map
+        const layerSwitcher = new ol.control.LayerSwitcher();
+
+        map.addControl(layerSwitcher);
 
         const editor = new ole.Editor(map);
 

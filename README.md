@@ -49,14 +49,16 @@ editor.addControls([draw, cad]);
 ## Angular Component
 
 ```
-npm install jsts --save
 npm install ol --save
+npm install ol-layerswitcher --save
+npm install jsts --save
 ```
 
 index.html
 ``` html
 <link rel="stylesheet" href="https://openlayers.org/en/v5.3.0/css/ol.css" type="text/css">
 <script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js"></script>
+<script src="https://unpkg.com/ol-layerswitcher@3.2.0"></script>
 ```
 
 app-component.ts
