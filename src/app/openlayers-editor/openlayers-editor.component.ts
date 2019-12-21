@@ -1,6 +1,9 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import WMTSTileGrid from 'ol/tilegrid/WMTS.js';
 import * as ole from '../ole/index.js';
+import TileLayer from 'ol/layer/Tile';
+import {Observable, of} from 'rxjs';
+import * as Layers from "./layers.json";
 
 declare var ol: any;
 
@@ -19,49 +22,37 @@ export class OpenlayersEditorComponent implements OnInit {
     }
 
     ngOnInit() {
-        //http://www.gisandbeers.com/servidores-wms-libres-datos-e-imagenes-satelite/
+        const layers = Layers["default"].layers.map(function(value){
+          var sourceType = null;
+
+          if(value.source.type === "TileWMS"){
+            sourceType = ol.source.TileWMS;
+          }else if(value.source.type === "TileImage"){
+            sourceType = ol.source.TileImage;
+          }else{
+            alert("Source type not found.")
+          }
+
+          value["source"] = new sourceType({
+              url: value.source.url,
+              params: value.source.params
+          });
+
+          const layer = new ol.layer.Tile(value);
+
+          return layer;
+        });
 
         const editLayer = new ol.layer.Vector({
             source: new ol.source.Vector(),
         });
 
         const map = new ol.Map({
-            layers: [
-                new ol.layer.Tile({
-                    title: 'OpenStreetMap',
-                    type: 'base',
-                    source: new ol.source.TileImage({
-                        url: 'http://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                    })
-                }),
-                new ol.layer.Tile({
-                    title: 'Google Satellite',
-                    visible: false,
-                    source: new ol.source.TileImage({
-                        url: 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
-                    })
-                }),
-                new ol.layer.Tile({
-                    title: 'Google Hybrid',
-                    visible: false,
-                    source: new ol.source.TileImage({
-                        url: 'https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}',
-                    })
-                }),
-                // new ol.layer.Tile({
-                //     title: 'Global Imagery',
-                //     source: new ol.source.TileWMS({
-                //         url: 'https://ahocevar.com/geoserver/wms',
-                //         params: {LAYERS: 'nasa:bluemarble', TILED: true}
-                //     })
-                // }),
-
-                editLayer
-            ],
+            layers: layers,
             target: 'map',
             view: new ol.View({
-                center: [873708.375917, 6105425.847789],
-                zoom: 15
+                center: [-5145808 , -1481336],
+                zoom: 5
             })
         });
 

@@ -1,0 +1,32 @@
+{
+  "layers": [
+    {
+      "title": "OpenStreetMap",
+      "type": "base",
+      "visible": true,
+      "source": {
+        "type": "TileImage",
+        "url": "http://tile.openstreetmap.org/{z}/{x}/{y}.png"
+      }
+    },
+    {
+      "title": "Google Satellite",
+      "visible": false,
+      "source": {
+        "type": "TileImage",
+        "url": "https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
+      }
+    },
+    {
+      "title": "Imóveis do Cadastro Ambiental Rural",
+      "visible": false,
+      "source": {
+        "type": "TileWMS",
+        "url": "http://localhost:8005/wms",
+        "params": {
+            "LAYERS": "imoveis_car", "TILED": true
+        }
+      }
+    }
+  ]
+}
