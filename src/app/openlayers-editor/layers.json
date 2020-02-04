@@ -18,13 +18,13 @@
       }
     },
     {
-      "title": "Imóveis do Cadastro Ambiental Rural",
+      "title": "My Layer",
       "visible": false,
       "source": {
         "type": "TileWMS",
-        "url": "http://localhost:8005/wms",
+        "url": "http://localhost/wms",
         "params": {
-            "LAYERS": "imoveis_car", "TILED": true
+            "LAYERS": "my_layer", "TILED": true
         }
       }
     }
